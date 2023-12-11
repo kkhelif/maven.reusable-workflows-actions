@@ -31,7 +31,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       working-directory: ./my-app
-      run: mvn -B package --file pom.xml -Drevision=$VERSION
+      run: mvn -B package --file pom.xml -Drevision=${{ env.VERSION }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
@@ -41,15 +41,26 @@ jobs:
 
     - name: debug
       run: |
-        echo "VERSION: $VERSION"
+        echo "VERSION: ${{ env.VERSION }}"
         ls -la my-app/target
+
+    - name: Create git tag
+      run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git tag v${{ env.VERSION }}
+          git push origin v${{ env.VERSION }}   
 
     - name: Release
       uses: softprops/action-gh-release@v1
       if: github.ref == 'refs/heads/main'
       with:
+        name: Release ${{ env.VERSION }}
+        tag_name: v${{ env.VERSION }}
+        body: |
+          Release ${{ env.VERSION }}
         files: |
-          my-app/target/my-app-$VERSION.jar
+          my-app/target/my-app-${{ env.VERSION }}.jar
 
 
     
