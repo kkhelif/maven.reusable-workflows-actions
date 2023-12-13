@@ -41,6 +41,6 @@ jobs:
         directory: ${{ inputs.working-directory }}
 
     - name: Use Create Git Tag Action
-      uses: ./actions/create-release/create-release.yml
+      uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release/create-release.yml
       with:
         version: '1.0.0'
