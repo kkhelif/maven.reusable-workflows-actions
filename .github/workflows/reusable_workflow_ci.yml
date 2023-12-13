@@ -59,19 +59,18 @@ jobs:
       uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release@main
       with:
         version: '${{ inputs.version }}'
-        artifacts: 'my-app/target/*${{ inputs.version }}.jar'
+        artifacts: '${{ inputs.working-directory }}/target/*${{ inputs.version }}.jar'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload build artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: release-artifact
-        path: my-app/target/*${{ inputs.version }}.jar
+        path: ${{ inputs.working-directory }}/target/*${{ inputs.version }}.jar
 
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
