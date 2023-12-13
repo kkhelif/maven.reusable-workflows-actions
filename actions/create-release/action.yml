@@ -1,3 +1,9 @@
+name: 'Create Release'
+description: 'Create a release with a tag'
+inputs:
+  version:
+    description: 'The version number for the git tag'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -10,3 +16,4 @@ runs:
         git push origin v${{ inputs.version }}
         # create a release with the tag
         gh release create v${{ inputs.version }} --title "Release v${{ inputs.version }}" --notes "Release v${{ inputs.version }}"
+å
