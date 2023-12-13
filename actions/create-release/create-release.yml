@@ -1,0 +1,11 @@
+runs:
+  using: "composite"
+  steps:
+    - name: Create git tag
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git tag v${{ inputs.version }}
+        git push origin v${{ inputs.version }}
+        # create a release with the tag
+        gh release create v${{ inputs.version }} --title "Release v${{ inputs.version }}" --notes "Release v${{ inputs.version }}"
