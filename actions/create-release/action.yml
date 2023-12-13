@@ -16,4 +16,3 @@ runs:
         git push origin v${{ inputs.version }}
         # create a release with the tag
         gh release create v${{ inputs.version }} --title "Release v${{ inputs.version }}" --notes "Release v${{ inputs.version }}"
-å
