@@ -43,6 +43,6 @@ jobs:
       uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release@main
       with:
         version: '${{ inputs.version }}'
-        artifacts: 'my-app/target/*.jar'
+        artifacts: 'my-app/target/*${{ inputs.version }}.jar'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
