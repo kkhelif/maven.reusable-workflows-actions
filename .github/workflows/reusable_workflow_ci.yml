@@ -17,7 +17,7 @@ permissions:
   contents: write
   
 jobs:
-  CI:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,11 +32,24 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build with Maven
+    - name: Build
       run: | 
         mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn -B package --file pom.xml
       working-directory: ${{ inputs.working-directory }}
+
+    - name: Test
+      run: | 
+        mvn versions:set -DnewVersion=${{ inputs.version }}
+        mvn test
+      working-directory: ${{ inputs.working-directory }}
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      if: always()
+      with:
+        files: |
+          ${{ inputs.working-directory }}/target/surefire-reports/**/*.xml
 
     - name: Use Create Git Tag Action
       if: github.ref == 'refs/heads/main'
@@ -46,3 +59,25 @@ jobs:
         artifacts: 'my-app/target/*${{ inputs.version }}.jar'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: release-artifact
+        path: my-app/target/*${{ inputs.version }}.jar
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  
