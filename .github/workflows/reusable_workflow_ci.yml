@@ -1,4 +1,4 @@
-name: Reusable Maven Build Workflow
+name: CI
 
 on:
   workflow_call:
@@ -41,6 +41,6 @@ jobs:
         directory: ${{ inputs.working-directory }}
 
     - name: Use Create Git Tag Action
-      uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release/create-release.yml
+      uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release/create-release.yml@main
       with:
         version: '1.0.0'
