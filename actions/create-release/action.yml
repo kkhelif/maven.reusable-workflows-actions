@@ -1,12 +1,23 @@
 name: 'Create Release'
 description: 'Create a release with a tag'
+
 inputs:
   version:
     description: 'The version number for the git tag'
     required: true
+  artifacts:
+    description: 'The path to the artifact to upload'
+    required: true
+
+
 runs:
   using: "composite"
   steps:
+    # add a step that zips the path specified in the artifacts input
+    - name: Zip artifact
+      shell: bash
+      run: |
+        zip -r release-artifact.zip ${{ inputs.artifacts }}
     - name: Create git tag
       shell: bash
       run: |
@@ -15,4 +26,5 @@ runs:
         git tag v${{ inputs.version }}
         git push origin v${{ inputs.version }}
         # create a release with the tag
-        gh release create v${{ inputs.version }} --title "Release v${{ inputs.version }}" --notes "Release v${{ inputs.version }}"
+        gh release create v${{ inputs.version }} --title "Release v${{ inputs.version }}" --notes "Release v${{ inputs.version }}" --attach release-artifact.zip
+      
