@@ -44,6 +44,9 @@ jobs:
     #     directory: ${{ inputs.working-directory }}
 
     - name: Use Create Git Tag Action
+      if: github.ref == 'refs/heads/main'
       uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release@main
       with:
         version: '${{ inputs.version }}'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
