@@ -8,10 +8,15 @@ on:
         required: true
         default: 'latest'
         type: string
+      environment:
+        description: 'GitHub Release'
+        required: true
+        default: 'latest'
+        type: string
 
 jobs:
   deploy-prod:
-    environment: production
+    environment: ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
 
     steps:
