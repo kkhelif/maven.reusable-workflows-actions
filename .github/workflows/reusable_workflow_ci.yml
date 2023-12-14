@@ -57,7 +57,7 @@ jobs:
         script-path: ${{ inputs.cake-script }}
         target: ./my-app/target/
         arguments: |
-          version: ${{ inputs.version }}
+          file-version: ${{ inputs.version }}
       
     - name: Debug
       run: tree -a
