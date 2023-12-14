@@ -50,6 +50,9 @@ jobs:
         mvn test
       working-directory: ${{ inputs.working-directory }}
 
+    - name: Debug
+      run: tree -a
+
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
       if: always()
