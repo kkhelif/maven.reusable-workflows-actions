@@ -25,12 +25,10 @@ runs:
       with:
         release: ${{ inputs.release }}
         asset-name: ${{ inputs.asset-name }}
-        github_token: ${{ inputs.github-token }}
-
-    - name: Debug
-      run: tree
-      shell: bash
+        github-token: ${{ inputs.github-token }}
 
     - name: Deploy Asset
-      run: echo 'Deploying artifact'
+      run: | 
+          echo 'Deploying artifact'
+          tree 
       shell: bash
