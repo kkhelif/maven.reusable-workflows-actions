@@ -1,0 +1,29 @@
+name: Deploy to Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'GitHub Release'
+        required: true
+        default: 'latest'
+
+jobs:
+  deploy-prod:
+    environment: production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download release asset
+        uses: SolidifyDemo/maven-reusable-workflows-actions/actions/download-release-asset@main
+        with:
+          release: ${{ github.event.inputs.release }}
+          asset-name: 'release-artifact.zip'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: debug
+        run: tree
+
+      - name: Deploy asset
+        run: echo 'Deploying artifact'
+        shell: bash
