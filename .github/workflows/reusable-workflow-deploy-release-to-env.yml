@@ -1,12 +1,13 @@
 name: Deploy to Environment
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       release:
         description: 'GitHub Release'
         required: true
         default: 'latest'
+        type: string
 
 jobs:
   deploy-prod:
