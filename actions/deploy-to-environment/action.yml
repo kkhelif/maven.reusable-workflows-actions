@@ -1,0 +1,33 @@
+name: Deploy Release to Environment
+
+description: |
+  This action downloads a release asset from a GitHub release and deploys it to the specified environment.
+
+inputs:
+  release:
+    description: 'GitHub Release'
+    required: true
+    default: 'latest'
+  asset-name:
+    description: 'Asset Name'
+    required: true
+    default: 'release-artifact.zip'
+
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Download Release Asset
+      uses: SolidifyDemo/maven-reusable-workflows-actions/actions/download-release-asset@main
+      with:
+        release: ${{ inputs.release }}
+        asset-name: ${{ inputs.asset-name }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Debug
+      run: tree
+      shell: bash
+
+    - name: Deploy Asset
+      run: echo 'Deploying artifact'
+      shell: bash

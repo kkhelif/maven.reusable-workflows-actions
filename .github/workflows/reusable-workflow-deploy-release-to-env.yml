@@ -4,12 +4,12 @@ on:
   workflow_call:
     inputs:
       release:
-        description: 'GitHub Release'
+        description: 'GitHub release version'
         required: true
         default: 'latest'
         type: string
       environment:
-        description: 'GitHub Release'
+        description: 'Target environment'
         required: true
         default: dev
         type: environment
