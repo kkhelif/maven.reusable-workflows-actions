@@ -26,5 +26,5 @@ runs:
         git tag v${{ inputs.version }}
         git push origin v${{ inputs.version }}
         # create a release with the tag
-        gh release create v${{ inputs.version }} --title "Release v${{ inputs.version }}" --notes "Release v${{ inputs.version }}" ./release-artifact.zip
+        gh release create ${{ inputs.version }} --title "Release v${{ inputs.version }}" --notes "Release v${{ inputs.version }}" ./release-artifact.zip
       
