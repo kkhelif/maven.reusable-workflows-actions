@@ -35,7 +35,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build
+    - name: Run Cake build script
       run: | 
         mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn -B package --file pom.xml
@@ -45,6 +45,7 @@ jobs:
       run: | 
         mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn test
+        tree
       working-directory: ${{ inputs.working-directory }}
 
     - name: Publish Test Results
