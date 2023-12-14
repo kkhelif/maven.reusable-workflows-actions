@@ -9,10 +9,13 @@ on:
       version:
         required: true
         type: string
+      script:
+        required: false
+        type: string
     secrets:
       token:
         required: true
-        
+   
 permissions:
   contents: write
   issues: read
@@ -21,6 +24,7 @@ permissions:
   
 jobs:
   build:
+    name: Building version ${{ inputs.version }}
     runs-on: ubuntu-latest
 
     steps:
@@ -38,20 +42,19 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build and Test
+    - name: Build and Test version ${{ inputs.version }}
+      if: inputs.script == ''
       run: | 
         mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn -B package --file pom.xml
-      working-directory: ${{ inputs.working-directory }}
-
-    - name: Test
-      run: | 
-        mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn test
       working-directory: ${{ inputs.working-directory }}
 
-    - name: Debug
-      run: tree -a
+    - name: Build and Test version ${{ inputs.version }} using cake script
+      if: inputs.script != ''
+      run: | 
+       dotnet cake
+      working-directory: ${{ inputs.working-directory }}
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
