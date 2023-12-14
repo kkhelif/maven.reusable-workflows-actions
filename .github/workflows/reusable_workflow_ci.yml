@@ -38,7 +38,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Run Cake build script
+    - name: Build and Test
       run: | 
         mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn -B package --file pom.xml
@@ -49,11 +49,6 @@ jobs:
         mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn test
       working-directory: ${{ inputs.working-directory }}
-
-    - name: debug
-      run: | 
-        echo "debug"
-        tree -a
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
