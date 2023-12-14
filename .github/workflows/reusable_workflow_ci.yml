@@ -48,8 +48,12 @@ jobs:
       run: | 
         mvn versions:set -DnewVersion=${{ inputs.version }}
         mvn test
-        tree -a
       working-directory: ${{ inputs.working-directory }}
+
+    - name: debug
+      run: | 
+        echo "debug"
+        tree -a
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
