@@ -11,7 +11,7 @@ on:
       environment:
         description: 'GitHub Release'
         required: true
-        default: 'latest'
+        default: dev
         type: environment
 
 jobs:
