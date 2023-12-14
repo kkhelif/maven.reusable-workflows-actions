@@ -16,7 +16,7 @@ inputs:
     description: 'Output path for downloaded asset'
     required: true
     default: 'artifact'
-  github_token:
+  github-token:
     description: 'GitHub Token'
     required: true
 
@@ -32,7 +32,7 @@ runs:
         gh release download ${{ inputs.release }} --pattern ${{ inputs.asset-name }} --repo ${{ github.repository }} --clobber
       shell: bash
       env:
-        GH_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
+        GH_TOKEN: ${{ inputs.github-token }} 
 
     - name: Download Latest Release Artifact
       if: ${{ inputs.release == 'latest' }}
@@ -40,7 +40,7 @@ runs:
         gh release download --pattern ${{ inputs.asset-name }} --repo ${{ github.repository }} --clobber
       shell: bash
       env:
-        GH_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
+        GH_TOKEN: ${{ inputs.github-token }} 
 
     - name: Unzip Release Artifact
       run: |
