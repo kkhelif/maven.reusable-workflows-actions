@@ -24,7 +24,7 @@ permissions:
   
 jobs:
   build:
-    name: Building version ${{ inputs.version }}
+    name: Building v${{ inputs.version }}
     runs-on: ubuntu-latest
 
     steps:
@@ -42,7 +42,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build and Test version ${{ inputs.version }}
+    - name: Build and Test
       if: inputs.cake-script == ''
       run: | 
         mvn versions:set -DnewVersion=${{ inputs.version }}
@@ -50,7 +50,7 @@ jobs:
         mvn test
       working-directory: ${{ inputs.working-directory }}
 
-    - name: Build and Test version ${{ inputs.version }} using cake script
+    - name: Build and Test using cake script
       if: inputs.cake-script != '' 
       uses: cake-build/cake-action@v1
       with:
@@ -68,7 +68,7 @@ jobs:
       uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release@main
       with:
         version: '${{ inputs.version }}'
-        artifacts: '${{ inputs.working-directory }}/target/*${{ inputs.version }}.jar'
+        artifacts: '${{ inputs.working-directory }}/target/*.jar'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -79,6 +79,7 @@ jobs:
         path: ${{ inputs.working-directory }}/target/*${{ inputs.version }}.jar
 
   lint:
+    name: Linting v${{ inputs.version }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
