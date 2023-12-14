@@ -55,6 +55,10 @@ jobs:
       uses: cake-build/cake-action@v1
       with:
         script-path: ${{ inputs.cake-script }}
+        target: ./my-app/target/
+      
+    - name: Debug
+      run: tree -a
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
