@@ -1,0 +1,45 @@
+name: Download Release Artifact
+
+description: |
+  This action downloads a release artifact from a GitHub release and unzips it.
+
+inputs:
+  release:
+    description: 'GitHub release tag or use latest for the most recent release'
+    required: true
+    default: 'latest'
+  asset-name:
+    description: 'Asset Name'
+    required: true
+    default: 'release-artifact.zip'
+  output-path:
+    description: 'Output path for downloaded asset'
+    required: true
+    default: 'release-artifact.zip'
+  github_token:
+    description: 'GitHub Token'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Download Release Artifact by tag
+      if: ${{ inputs.release != 'latest' }}
+      run: |
+        gh release download ${{ inputs.release }} --pattern ${{ inputs.asset-name }} --repo ${{ github.repository }} --clobber
+      env:
+        GH_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
+
+    - name: Download Latest Release Artifact
+      if: ${{ inputs.release == 'latest' }}
+      run: |
+        gh release download --pattern ${{ inputs.asset-name }} --repo ${{ github.repository }} --clobber
+      env:
+        GH_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
+
+    - name: Unzip Release Artifact
+      run: |
+        unzip ${{ inputs.asset-name }} -d ${{ inputs.output-path }}
