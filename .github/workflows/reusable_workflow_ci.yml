@@ -24,7 +24,6 @@ permissions:
   
 jobs:
   build:
-    name: Building v${{ inputs.version }}
     runs-on: ubuntu-latest
 
     steps:
@@ -85,7 +84,6 @@ jobs:
         path: ${{ inputs.working-directory }}/target/*${{ inputs.version }}.jar
 
   lint:
-    name: Linting v${{ inputs.version }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
