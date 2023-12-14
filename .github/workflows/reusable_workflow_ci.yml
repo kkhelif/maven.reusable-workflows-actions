@@ -52,7 +52,7 @@ jobs:
 
     - name: Build and Test using cake script
       if: inputs.cake-script != '' 
-      uses: cake-build/cake-action@v1
+      uses: cake-build/cake-action@a6eb054329257c9e70a6c6bf01747ad6e1d9d52b
       with:
         script-path: ${{ inputs.cake-script }}
         target: ./my-app/target/
@@ -63,7 +63,7 @@ jobs:
       run: tree -a
 
     - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2
+      uses: EnricoMi/publish-unit-test-result-action/composite@ca89ad036b5fcd524c1017287fb01b5139908408
       if: always()
       with:
         files: |
