@@ -15,6 +15,9 @@ inputs:
   github-token:
     description: 'Github Token'
     required: true
+  target:
+    description: 'Target Environment'
+    required: true
 
 
 runs:
@@ -29,6 +32,6 @@ runs:
 
     - name: Deploy Asset
       run: | 
-          echo 'Deploying artifact'
+          echo "Deploying ${{ inputs.asset-name }} to ${{ inputs.target }}"
           tree 
       shell: bash
