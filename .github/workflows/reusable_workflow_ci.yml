@@ -70,7 +70,7 @@ jobs:
 
     - name: Use Create Git Tag Action
       if: github.ref == 'refs/heads/main'
-      uses: SolidifyDemo/maven-reusable-workflows-actions/actions/create-release@main
+      uses: kkhelif/maven-reusable-workflows-actions/actions/create-release@main
       with:
         version: '${{ inputs.version }}'
         artifacts: '${{ inputs.working-directory }}/target/*.jar'
