@@ -24,7 +24,7 @@ runs:
   using: 'composite'
   steps:
     - name: Download Release Asset
-      uses: SolidifyDemo/maven-reusable-workflows-actions/actions/download-release-asset@main
+      uses: kkhelif/maven-reusable-workflows-actions/actions/download-release-asset@main
       with:
         release: ${{ inputs.release }}
         asset-name: ${{ inputs.asset-name }}
