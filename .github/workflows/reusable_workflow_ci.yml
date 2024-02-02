@@ -17,10 +17,10 @@ on:
         required: true
    
 permissions:
-  contents: write
-  issues: read
-  checks: write
-  pull-requests: write
+  contents: write-all
+  issues: read-all
+  checks: write-all
+  pull-requests: write-all
   
 jobs:
   build:
