@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Download release asset
-        uses: SolidifyDemo/maven-reusable-workflows-actions/actions/download-release-asset@main
+        uses: kkhelif/maven-reusable-workflows-actions/actions/download-release-asset@main
         with:
           release: ${{ github.event.inputs.release }}
           asset-name: 'release-artifact.zip'
